@@ -1,0 +1,22 @@
+Domain(programName, programAbbreviation, departmentName, departmentAbbreviation, studentSsn, studentName,studentLogin, branchName courseCode courseName courseCredits classificationName grade seatLimit queuePosition)
+                   Functional Dependencies
+	(1) programName -> programAbbreviation
+	(2) departmentAbbreviation -> departmentName
+	(3) departmentName -> departmentAbbreviation
+	(4) studentSsn -> studentName studentLogin, programName, branchName
+	(5) studentLogin -> studentSsn studentName
+	(6) courseCode -> courseCredits departmentName seatLimit classificationName
+	(7) courseCode studentLogin -> queuePosition grade
+	(8) courseCode, studentLogin -> * (all attributes)
+
+	 Keys:
+	studentLogin courseCode 
+
+	BCNF Violoations:
+        (1) programName -> programAbbreviation
+	(2) departmentAbbreviation -> departmentName
+	(3) departmentName -> departmentAbbreviation
+	(4) studentSsn -> studentName studentLogin, programName, branchName
+	(5) studentLogin -> studentSsn studentName
+	(6) courseCode -> courseCredits departmentName seatLimit
+	

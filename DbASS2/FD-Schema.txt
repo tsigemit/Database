@@ -1,0 +1,175 @@
+Domain(programName, programAbbreviation, departmentName, departmentAbbreviation, studentSsn, studentName,studentLogin, branchName courseCode courseName courseCredits classificationName grade seatLimit queuePosition)
+                   Functional Dependencies
+	(1) programName -> programAbbreviation
+	(2) departmentAbbreviation -> departmentName
+	(3) departmentName -> departmentAbbreviation
+	(4) studentSsn -> studentName studentLogin, programName, branchName
+	(5) studentLogin -> studentSsn 
+	(6) courseCode -> courseCredits departmentName seatLimit classificationName
+	(7) courseCode studentLogin -> queuePosition grade
+	(8) courseCode, studentLogin -> * (all attributes)
+
+Step1
+
+Domain(* - programAbbreviation)
+Remaining FDs: 2.-7.
+
+Program(_programName, programAbbreviation)
+	programName => Domain.programName	 	
+       (1) programName → programAbbreviation
+
+Step2
+
+Domain(* - programAbbreviation)
+Remaining FDs: 3.-7.
+
+Program(_programName, programAbbreviation)
+	   programName => Domain.programName	 	 	
+          (1) programName → programAbbreviation
+
+Department(_name, _abbreviation)
+	(name, abbreviation) => Domain.(departmentName, departmentAbbreviation)
+	(2) departmentAbbreviation → departmentName
+	(3) departmentName →> departmentAbbreviation
+
+Step3	 	
+ 	
+Domain(* - programAbbreviation – studentName – branchName -programName)
+Remaining FDs: 6, 7
+
+Program(_programName, programAbbreviation)
+	programName => Domain.programName	 	
+       (1) programName → programAbbreviation
+
+Department(_name, _abbreviation)
+	(name, abbreviation) => Domain.(departmentName, departmentAbbreviation)
+	(2) departmentAbbreviation → departmentName
+	(3) departmentName →> departmentAbbreviation
+	 	 	
+Student(_ssn, _login, name, branch, program)
+	(ssn, login) => Domain.(studentSsn, studentLogin)
+	program => Program.programName
+	(4) studentSsn → studentName
+	(4) studentSsn → studentLogin
+	(4) studentSsn → branchName
+	(4) studentSsn → programName
+	(5) studentLogin → studentSsn
+
+Step4	 
+	 	
+Domain(* - programAbbreviation – studentName – branchName -programName – courseName – courseCredits -seatLimit - programName - classificationName)
+Remaining FDs: 7
+
+Program(_programName, programAbbreviation)
+	programName => Domain.programName	 	
+       (1) programName → programAbbreviation
+
+Department(_name, _abbreviation)
+	(name, abbreviation) => Domain.(departmentName, departmentAbbreviation)
+	(2) departmentAbbreviation -> departmentName
+	(3) departmentName -> departmentAbbreviation
+
+Student(_ssn, _login, name, branch, program)
+	(ssn, login) => Domain.(studentSsn, studentLogin)
+	program => Program.programName
+	(4) studentSsn → studentName
+	(4) studentSsn → studentLogin
+	(4) studentSsn → branchName
+	(4) studentSsn → programName
+	(5) studentLogin → studentSsn
+
+	 	 	
+Course(_code, name, credits, program, seatLimit, classification)
+	code => Domain.courseCode
+	program => Program.programName
+	(6) courseCode → courseName
+	(6) courseCode → courseCredits
+	(6) courseCode → seatLimit
+	(6) courseCode → programName
+        (6) courseCode → classificationName
+
+Step 5 	 	
+ 		 	 	
+Domain(* - programAbbreviation – studentName – branchName -programName – courseName – courseCredits -seatLimit – programName classificationName– queuePosition – grade)
+Remaining Fds 8
+
+Program(_programName, programAbbreviation)
+	programName => Domain.programName	 	
+       (1) programName → programAbbreviation
+
+Department(_name, _abbreviation)
+	(name, abbreviation) => Domain.(departmentName, departmentAbbreviation)
+	(2) departmentAbbreviation → departmentName
+	(3) departmentName →> departmentAbbreviation
+
+Student(_ssn, _login, name, branch, program)
+	(ssn, login) => Domain.(studentSsn, studentLogin)
+	program => Program.programName
+	(4) studentSsn → studentName
+	(4) studentSsn → studentLogin
+	(4) studentSsn → branchName
+	(4) studentSsn → programName
+	(5) studentLogin → studentSsn
+	 	 	
+Course(_code, name, credits, program, seatLimit, classification)
+	code => Domain.courseCode
+	program => Program.programName
+	(6) courseCode → courseName
+	(6) courseCode → courseCredits
+	(6) courseCode → seatLimit
+	(6) courseCode → programName
+        (6) courseCode → classificationName
+
+PositionAndGrade(_code, _login, position, grade)
+	code => Course.code
+	login => Student.name
+	(7) courseCode studentLogin → queuePosition
+	(7) courseCode studentLogin → grade
+
+Step6 	
+ 	 	
+Domain(programName, departmentName, departmentAbbreviation, studentSsn, studentLogin courseCode)
+Remaining Fds none
+
+Program(_programName, programAbbreviation)
+	programName => Domain.programName	 	
+       (1) programName → programAbbreviation
+ 	 	
+Department(_name, _abbreviation)
+	(name, abbreviation) => Domain.(departmentName, departmentAbbreviation)
+	(2) departmentAbbreviation → departmentName
+	(3) departmentName →> departmentAbbreviation
+
+Student(_ssn, _login, name, branch, program)
+	(ssn, login) => Domain.(studentSsn, studentLogin)
+	program => Program.programName
+	(4) studentSsn → studentName
+	(4) studentSsn → studentLogin
+	(4) studentSsn → branchName
+	(4) studentSsn → programName
+	(5) studentLogin → studentSsn
+	 	 	
+Course(_code, name, credits, program, seatLimit, classification)
+	code => Domain.courseCode
+	program => Program.programName
+	(6) courseCode → courseName
+	(6) courseCode → courseCredits
+	(6) courseCode → seatLimit
+	(6) courseCode → programName
+        (6) courseCode → classificationName
+
+PositionAndGrade(_code, _login, position, grade)
+	code => Course.code
+	login => Student.name
+	(7) courseCode studentLogin → queuePosition
+	(7) courseCode studentLogin → grade
+	 	 	
+Classification(_code, _login)
+	code => Course.code
+	login => Student.name
+        (8) (courseCode, login) → *(all attributes)
+ 
+             
+
+
+

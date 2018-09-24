@@ -1,0 +1,65 @@
+Program(_name,abbreviation)
+
+Department(_name,abbreviation)
+UNIQUE abbreviation
+hosts(_departmentName,_programName)
+  departmentName -> Department.name
+  programName -> Program.name
+
+Student(_ssn,name,login,programName)
+  programName -> Program.name
+     UNIQUE login
+     UNIQUE (ssn, programName)
+
+Branch(_name,_programName)
+  programName -> Program.name
+
+belongsToBranch(_studentSsn,branchName,branchProgramName)
+  studentSsn -> Student.ssn
+  branchName -> Branch.name
+  branchProgramName -> Branch.programName
+
+Course(_code,name,credits,departmentName)
+  departmentName -> Department.name
+
+hasPrerequisite(_courseCode,_courseCode)
+  courseCode -> Course.code
+  courseCode -> Course.code
+
+Classification(_name)
+
+isClassifiedAs(_courseCode,_classificationName)
+  courseCode -> Course.code
+  classificationName -> Classification.name
+
+isProgramRequirementFor(_courseCode,_programName)
+  courseCode -> Course.code
+  programName -> Program.name
+
+isBranchRequirementFor(_courseCode,_branchName,_branchProgramName)
+  courseCode -> Course.code
+  branchName -> Branch.name
+  branchProgramName -> Branch.programName
+
+isBranchRecommendationFor(_courseCode,_branchName,_branchProgramName)
+  courseCode -> Course.code
+  branchName -> Branch.name
+  branchProgramName -> Branch.programName
+
+registeredFor(_studentSsn,_courseCode)
+  studentSsn -> Student.ssn
+  courseCode -> Course.code
+
+hasTaken(_studentSsn,_courseCode,grade)
+  studentSsn -> Student.ssn
+  courseCode -> Course.code
+
+LimitedCourse(_code,seatLimit)
+  code -> Course.code
+
+isWaitingFor(_studentSsn,_courseCode,position)
+  studentSsn -> Student.ssn
+  courseCode -> Course.code
+  UNIQUE (position, courseCode)
+
+
